@@ -19,4 +19,5 @@ func NewAPI(key string) *API {
 
 func (api *API) Hello() {
 	fmt.Println("Hello world!")
+	fmt.Println(key)
 }
