@@ -1,2 +1,0 @@
-# pretiumVKgo
-vk golang api
