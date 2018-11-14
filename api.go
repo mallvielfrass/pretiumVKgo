@@ -24,13 +24,9 @@ func (api *API) Hello() {
 	fmt.Println("Hello world!")
 	//httpClient.Get(url)
 }
-func (api *API) Users_get(ids string, fields string) string{
-	fmt.Println("Hello world!")
-	//httpClient.Get(url)
-
-	url := "https://api.vk.com/method/users.get?"+"&access_token="+api.Key+"&v=5.87"
-	rule := `{"user_ids":`+ids+`,"fields"=`+fields+`}`
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(rule)))
+func conventus (cmeth string,crule string) string{
+	url := "https://api.vk.com/method/"cmeth+"?"+"&access_token="+api.Key+"&v=5.87"
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(crule)))
 	req.Header.Set("Content-Type", "application/json")
 	resp, err := api.httpClient.Do(req)
 	if err != nil {
@@ -43,4 +39,12 @@ func (api *API) Users_get(ids string, fields string) string{
 	}
 	result:=string(bodyBuf)
 	return result
+}
+func (api *API) Users_get(ids string, fields string) string{
+	fmt.Println("Hello world!")
+	//httpClient.Get(url)
+	method:="users.get"
+	rule := `{"user_ids":`+ids+`,"fields"=`+fields+`}`
+	retres:= conventus(method,rule)
+	return retres
 }
