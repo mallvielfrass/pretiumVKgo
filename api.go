@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"io/ioutil"
 	"bytes"
+	"log"
 )
 
 type API struct {
@@ -31,7 +32,7 @@ func (api *API) users_get(ids string, fields string) string{
 	rule := `{"user_ids":`+ids+`,"fields"=`+fields+`}`
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(rule)))
 	req.Header.Set("Content-Type", "application/json")
-	resp, err := client.Do(req)
+	resp, err := httpClient.Do(req)
 	if err != nil {
 		log.Fatal("http request error:", err)
 	}
