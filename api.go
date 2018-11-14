@@ -24,7 +24,7 @@ func (api *API) Hello() {
 	fmt.Println("Hello world!")
 	//httpClient.Get(url)
 }
-func (api *API) users_get(ids string, fields string) string{
+func (api *API) Users_get(ids string, fields string) string{
 	fmt.Println("Hello world!")
 	//httpClient.Get(url)
 
