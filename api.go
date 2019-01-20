@@ -78,14 +78,6 @@ func (api *API) Users_get(ids string, fields string) string {
 	return retres
 }
 
-func (api *API) Groups_searcha(q string, offset string, count string) string {
-	fmt.Println("groups.search")
-	//httpClient.Get(url)
-	method := "groups.search"
-	rule := `{"q":` + q + `,"offset"=` + offset + `,"count"=` + count + `}`
-	retres := api.conventus(method, rule)
-	return retres
-}
 func (api *API) Groups_search(q string, offset int, count int) string {
 	method := "groups.search"
 
@@ -113,14 +105,6 @@ func (api *API) Groups_search(q string, offset int, count int) string {
 	return retres
 }
 
-func (api *API) Groups_searchx(q string) string {
-	fmt.Println("groups.search")
-	//httpClient.Get(url)
-	method := "groups.search"
-	rule := `{"q":` + q + `}`
-	retres := api.conventus(method, rule)
-	return retres
-}
 func (api *API) GetProfileInfo() string {
 
 	method := "account.getProfileInfo"
