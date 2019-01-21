@@ -37,5 +37,7 @@ func main() {
 	var result GroupStruct
 	err, _ := json.Unmarshal(b, &result)
 	log.Printf("%#v", result)
-
+	//возвращает ошибку ./test.go:38:17: error: number of results does not match number of values
+	//err, _ := json.Unmarshal(b, &result)
+	//               ^
 }
