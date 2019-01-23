@@ -1,7 +1,8 @@
-package main
+package mainc
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 )
 
@@ -35,8 +36,12 @@ func main() {
 	"photo_100":"https:\/\/pp.userapi.com\/c836138\/v836138505\/48276\/3yaDr9kg1Ac.jpg?ava=1",
 	"photo_200":"https:\/\/pp.userapi.com\/c836138\/v836138505\/48274\/zpW_0KOAvvI.jpg?ava=1"}`)
 	var result GroupStruct
-	err, _ := json.Unmarshal(b, &result)
+	err := json.Unmarshal(b, &result)
+	if err != nil {
+		log.Fatalln("f", err)
+	}
 	log.Printf("%#v", result)
+	fmt.Println(result.ID)
 	//возвращает ошибку ./test.go:38:17: error: number of results does not match number of values
 	//err, _ := json.Unmarshal(b, &result)
 	//               ^
