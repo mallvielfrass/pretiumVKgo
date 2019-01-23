@@ -112,3 +112,21 @@ func (api *API) GetProfileInfo() string {
 	retres := api.conventus(method, rule)
 	return retres
 }
+
+func (api *API) Groups_getById(group_id string, fields string) string {
+	fmt.Println("Users_get")
+	//httpClient.Get(url)
+	method := "groups.getById"
+	rule := `{"user_ids":` + ids + `,"fields"=` + fields + `}`
+	rule := Request{
+		Q:      q,
+		Offset: offset,
+		Count:  count}
+
+	// Преобразуем структура запроса в формат url.Values. Этот тип содержит
+	// параметры для типичных get-запросов, у которых параметры запроса указываются
+	// в адресе
+	ruleValues, _ := query.Values(rule)
+	retres := api.conventus(method, rule)
+	return retres
+}
