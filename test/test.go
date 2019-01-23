@@ -1,4 +1,5 @@
-package mainc
+dd
+//package main
 
 import (
 	"encoding/json"
