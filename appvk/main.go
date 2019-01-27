@@ -17,7 +17,8 @@ func main() {
 	}
 	key := (strings.Split(string(ready), "\n"))[0]
 	api := pretiumvkgo.NewAPI(key)
-	id := "29534144"
+	//id := "29534144"
+	id := "oldlentach"
 	fields := "members_count"
 	slice := api.Groups_getById(id, fields)
 	fmt.Println(slice)

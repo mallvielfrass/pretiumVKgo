@@ -7,6 +7,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
+
+	"github.com/google/go-querystring/query"
 )
 
 type API struct {
@@ -25,9 +28,10 @@ func (api *API) conventus(cmeth string, a interface{}) string {
 		fmt.Println(err)
 		return "conventus false"
 	}
-	fmt.Println(string(parametrs))
+	r := string(parametrs)
+	//fmt.Println(r)
 	url := "https://api.vk.com/method/" + cmeth + "?" + "&access_token=" + api.Key + "&v=5.58"
-	bt := bytes.NewBuffer([]byte(string(parametrs)))
+	bt := bytes.NewBuffer([]byte(r))
 	req, err := http.NewRequest("POST", url, bt)
 	req.Header.Set("Content-Type", "application/json")
 	resp, err := api.httpClient.Do(req)
@@ -43,20 +47,43 @@ func (api *API) conventus(cmeth string, a interface{}) string {
 	return result
 }
 
-type GroupGetByID struct {
-	ID     string `json:"group_id"`
-	Fields string `json:"fields"`
+func (api *API) get(method string, params url.Values) string {
+	// Добавляем токен и версию в список параметров, т.к. они обязательны
+	params.Set("access_token", api.Key)
+	params.Set("v", "5.58")
+
+	// Формируем ссылку на сайт API. В Go ссылки имеют тип url.URL.
+	apiURL := &url.URL{
+		Scheme:   "https",            // протокол доступа
+		Host:     "api.vk.com",       // адрес сайта
+		Path:     "method/" + method, // путь на сайте
+		RawQuery: params.Encode()}    // параметры запроса
+
+	resp, err := http.Get(apiURL.String()) // выполняем запрос
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer resp.Body.Close()
+
+	b, err := ioutil.ReadAll(resp.Body) // считываем результат
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return string(b) // PROFIT
 }
-
-func (api *API) Groups_getById(id string, fields string) string {
+func (api *API) Groups_getById(group_id string, fields string) string {
 	fmt.Println("groups.getById")
-	//httpClient.Get(url)
+
 	method := "groups.getById"
-
-	rule := GroupGetByID{
-		ID:     id,
-		Fields: fields}
-
-	retres := api.conventus(method, rule)
+	type Request struct {
+		GroupID string `url:"group_id"`
+		Fields  string `url:"fields"`
+	}
+	rule := Request{
+		GroupID: group_id,
+		Fields:  fields}
+	ruleValues, _ := query.Values(rule)
+	retres := api.get(method, ruleValues)
 	return retres
 }
