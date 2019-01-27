@@ -1,4 +1,4 @@
-package main
+package c
 
 type Result struct {
 	Response Response `json:"response"`

@@ -12,3 +12,4 @@
 *.out
 token.base
 /appvk/key.txt
+.idea
