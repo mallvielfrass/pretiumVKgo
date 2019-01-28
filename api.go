@@ -87,3 +87,34 @@ func (api *API) Groups_getById(group_id string, fields string) string {
 	retres := api.get(method, ruleValues)
 	return retres
 }
+
+func (api *API) Groups_search(q string, offset int, count int) string {
+	method := "groups.search"
+	type Request struct {
+		Q      string `url:"q"`                // текст поискового запроса.
+		Offset int    `url:"offset,omitempty"` // смещение, необходимое для выборки определённого подмножества результатов поиска
+		Count  int    `url:"count,omitempty"`  // количество результатов поиска, которое необходимо вернуть
+	}
+	rule := Request{
+		Q:      q,
+		Offset: offset,
+		Count:  count}
+	ruleValues, _ := query.Values(rule)
+	retres := api.get(method, ruleValues)
+	return retres
+}
+func (api *API) Wall_Get(owner_id string, offset int, count int) string {
+	method := "wall.get"
+	type Request struct {
+		OwnerID string `url:"owner_id"`         // текст поискового запроса.
+		Offset  int    `url:"offset,omitempty"` // смещение, необходимое для выборки определённого подмножества результатов поиска
+		Count   int    `url:"count,omitempty"`  // количество результатов поиска, которое необходимо вернуть
+	}
+	rule := Request{
+		OwnerID: owner_id,
+		Offset:  offset,
+		Count:   count}
+	ruleValues, _ := query.Values(rule)
+	retres := api.get(method, ruleValues)
+	return retres
+}
