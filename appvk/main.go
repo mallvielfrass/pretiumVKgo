@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -57,25 +56,30 @@ func main() {
 	}
 	key := (strings.Split(string(ready), "\n"))[0]
 	api := pretiumvkgo.NewAPI(key)
-	id := "177388243"
+	//id := "177388243"
 	//id := "oldlentach"
-	fields := "members_count"
-	slice := api.Groups_getById(id, fields)
-	fmt.Println(slice)
-	search := api.Groups_search("vielfrass", 0, 2)
-	get := api.Wall_Get("-177388243", 0, 2)
-	fmt.Println(search)
-	fmt.Println(get)
-	bx := []byte(get)
-	var result Result
-	err = json.Unmarshal(bx, &result)
-	if err != nil {
-		log.Fatalln(err)
-	}
 
-	R := result.Response.Items
-	RV := 0
-	id := R[RV].ID
-	name := R[RV].Name
-	fmt.Println(name, id)
+	//S	fields := "members_count"
+	//slice := api.Groups_getById(id, fields)
+	//	fmt.Println(slice)
+	search := api.GroupsSearch("vielfrass", 0, 10)
+	//get := api.WallGet("-177388243", 0, 2)
+	fmt.Println(search)
+	//	fmt.Println(get)
+	//	idm := "-177388243"
+	//comment := api.WallCreateComment(idm, 1, "hello go")
+	//fmt.Println(comment)
+	//	bx := []byte(get)
+	//	var result Result
+
+	//	err = json.Unmarshal(bx, &result)
+	//	if err != nil {
+	//		log.Fatalln(err)
+	//	}
+
+	//	R := result.Response.Items
+	//	RV := 0
+	//	id := R[RV].ID
+	//	name := R[RV].Name
+	//	fmt.Println(name, id)
 }

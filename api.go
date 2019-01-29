@@ -88,7 +88,7 @@ func (api *API) Groups_getById(group_id string, fields string) string {
 	return retres
 }
 
-func (api *API) Groups_search(q string, offset int, count int) string {
+func (api *API) GroupsSearch(q string, offset int, count int) string {
 	method := "groups.search"
 	type Request struct {
 		Q      string `url:"q"`                // текст поискового запроса.
@@ -103,7 +103,7 @@ func (api *API) Groups_search(q string, offset int, count int) string {
 	retres := api.get(method, ruleValues)
 	return retres
 }
-func (api *API) Wall_Get(owner_id string, offset int, count int) string {
+func (api *API) WallGet(owner_id string, offset int, count int) string {
 	method := "wall.get"
 	type Request struct {
 		OwnerID string `url:"owner_id"`         // текст поискового запроса.
@@ -114,6 +114,24 @@ func (api *API) Wall_Get(owner_id string, offset int, count int) string {
 		OwnerID: owner_id,
 		Offset:  offset,
 		Count:   count}
+	ruleValues, _ := query.Values(rule)
+	retres := api.get(method, ruleValues)
+	return retres
+}
+
+func (api *API) WallCreateComment(owner_id string, post_id int, message string) string {
+
+	method := "wall.createComment"
+	type CreateComment struct {
+		OwnerID string `url:"owner_id"`
+		PostID  int    `url:"post_id"`
+		Message string `url:"message"`
+	}
+	rule := CreateComment{
+		OwnerID: owner_id,
+		PostID:  post_id,
+		Message: message}
+
 	ruleValues, _ := query.Values(rule)
 	retres := api.get(method, ruleValues)
 	return retres
