@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -12,40 +13,23 @@ import (
 type Result struct {
 	Response Response `json:"response"`
 }
+
 type Response struct {
 	Count int    `json:"count"`
 	Items []Item `json:"items"`
 }
 type Item struct {
-	ID         int           `json:"id"`
-	FromID     string        "from_id"
-	OwnerID    string        "owner_id"
-	Date       int           "date"
-	Marked     int           "marked_as_ads"
-	PostType   string        "post_type"
-	Text       string        "text"
-	CanEdit    bool          "can_edit"
-	CreatedBy  int           "created_by"
-	CanDelete  bool          "can_delete"
-	CanPin     bool          "can_pin"
-	PostSource []PostSourceX "post_source"
-	Comments   []CommentsX   "comments"
-	Likes      []LikesX      "likes"
-}
-type PostSourceX struct {
-	Type string "type"
-}
-type CommentsX struct {
-	Count         int    "count"
-	CanPost       int    "can_post"
-	GroupsCanPost string "groups_can_post"
-	CanClose      bool   "can_close"
-}
-type LikesX struct {
-	Count      int  "count"
-	UserLikes  int  "user_likes"
-	CanLike    bool "can_like"
-	CanPublish bool "can_publish"
+	ID           int    `json:"id"`
+	Name         string `json:"name"`
+	ScreenName   string `json:"screen_name"`
+	IsClosed     int    `json:"is_closed"`
+	Type         string `json:"page"`
+	IsAdmin      int    `json:"is_admin"`
+	IsMember     int    `json:"is_member"`
+	IsAdvertiser int    `json:"is_advertiser"`
+	Photo50      string `json:"photo_50"`
+	Photo100     string `json:"photo_100"`
+	Photo200     string `json:"photo_200"`
 }
 
 func main() {
@@ -62,24 +46,31 @@ func main() {
 	//S	fields := "members_count"
 	//slice := api.Groups_getById(id, fields)
 	//	fmt.Println(slice)
-	search := api.GroupsSearch("vielfrass", 0, 10)
+	r := api.GroupsSearch("typical weekday", 0, 10)
 	//get := api.WallGet("-177388243", 0, 2)
-	fmt.Println(search)
+	//fmt.Println(r)
 	//	fmt.Println(get)
 	//	idm := "-177388243"
 	//comment := api.WallCreateComment(idm, 1, "hello go")
 	//fmt.Println(comment)
-	//	bx := []byte(get)
-	//	var result Result
+	bx := []byte(r)
+	var result Result
 
-	//	err = json.Unmarshal(bx, &result)
-	//	if err != nil {
-	//		log.Fatalln(err)
-	//	}
+	err = json.Unmarshal(bx, &result)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
-	//	R := result.Response.Items
-	//	RV := 0
-	//	id := R[RV].ID
-	//	name := R[RV].Name
-	//	fmt.Println(name, id)
+	R := result.Response.Items
+	RV := 0
+	count := result.Response.Count
+	//fmt.Println(count)
+
+	for i := 0; i < count; i++ {
+		id := R[RV].ID
+		name := R[RV].Name
+		fmt.Println("Result number:", i, "|", "Name:", name, "|", "Id:", id)
+		RV = RV + 1
+	}
+
 }
