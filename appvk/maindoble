@@ -1,12 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 	"strconv"
 	"strings"
 
@@ -54,31 +52,15 @@ func main() {
 	}
 	key := (strings.Split(string(ready), "\n"))[0]
 	api := pretiumvkgo.NewAPI(key)
-	//_________________________search________________________________________________
-	fmt.Print("enter group`s name: ")
-	bio := bufio.NewReader(os.Stdin)
-	linex, _, err := bio.ReadLine()
-	if err != nil {
-		fmt.Println(err)
-	}
-	line := string(linex)
 
-	fmt.Print("enter count of group: ")
-	offs := bufio.NewReader(os.Stdin)
-	offsetx, _, err := offs.ReadLine()
-	if err != nil {
-		fmt.Println(err)
-	}
-	offset := string(offsetx)
-	i, err := strconv.Atoi(offset)
-	if err != nil {
-		// handle error
-		fmt.Println(err)
-		os.Exit(2)
-	}
-	//"Typical weekday | Multifandom "
-	r := api.GroupsSearch(line, 0, i)
+	//\\	r := api.GroupsSearch("Typical weekday | Multifandom ", 0, 10)
+	r := api.GroupsSearch("Typical weekday | Multifandom ", 0, 10)
 
+	//fmt.Println(r)
+	//	fmt.Println(get)
+	//	idm := "-177388243"
+	//comment := api.WallCreateComment(idm, 1, "hello go")
+	//fmt.Println(comment)
 	bx := []byte(r)
 	var result Result
 
@@ -87,10 +69,10 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	R := result.Response.Items //_______________group`s list&info
+	R := result.Response.Items
 	RV := 0
 	count := len(R)
-	fmt.Println("amount:", count)
+	fmt.Println("len:", count)
 	idLinks := make(map[int]int)
 	for i := 0; i < count; i++ {
 		id := R[RV].ID
@@ -108,6 +90,9 @@ func main() {
 
 		fmt.Println("Result number:", i, "|", "Name:", name, "|", "Id:", id, "|", "Number of post :", f)
 		RV = RV + 1
+		//fmt.Println(get)
+		//	time.Sleep(time.Microsecond * 1)
 	}
-
+	
+	//	fmt.Println(id_links)
 }
