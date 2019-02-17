@@ -136,3 +136,20 @@ func (api *API) WallCreateComment(owner_id string, post_id int, message string) 
 	retres := api.get(method, ruleValues)
 	return retres
 }
+func (api *API) AudioSearch(q string, count int, offset int) string {
+
+	method := "audio.search"
+	type CreateComment struct {
+		Q      string `url:"q"`
+		Count  int    `url:"count"`
+		Offset int    `url:"offset"`
+	}
+	rule := CreateComment{
+		Q:      q,
+		Count:  count,
+		Offset: offset}
+
+	ruleValues, _ := query.Values(rule)
+	retres := api.get(method, ruleValues)
+	return retres
+}

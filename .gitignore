@@ -12,4 +12,5 @@
 *.out
 token.base
 /appvk/key.txt
+/music/key.txt
 .idea
