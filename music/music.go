@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -67,7 +68,14 @@ func main() {
 	}
 	key := (strings.Split(string(ready), "\n"))[0]
 	api := pretiumvkgo.NewAPI(key)
-	res := api.AudioSearch("lala", 1, 0)
+	fmt.Println("enter music name")
+	offs := bufio.NewReader(os.Stdin)
+	offsetx, _, err := offs.ReadLine()
+	if err != nil {
+		fmt.Println(err)
+	}
+	mnamez := string(offsetx)
+	res := api.AudioSearch(mnamez, 1, 0)
 	//fmt.Println(x)
 	bx := []byte(res)
 	var result MResult
