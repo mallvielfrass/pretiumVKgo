@@ -17,10 +17,21 @@ type API struct {
 	Key        string
 }
 
-func NewAPI(key string) *API {
-	return &API{
-		httpClient: &http.Client{},
-		Key:        key}
+func NewAPI(arg ...string) *API {
+	key := arg[0]
+	var m []string
+	i := 0
+	for _, argname := range arg {
+		m[i] = argname
+		i = i + 1
+	}
+	if len(m) < 2 {
+		return &API{
+			httpClient: &http.Client{},
+			Key:        key}
+	} else {
+		fmt.Println("error")
+	}
 }
 func (api *API) conventus(cmeth string, a interface{}) string {
 	parametrs, err := json.Marshal(a)
