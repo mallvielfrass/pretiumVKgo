@@ -14,3 +14,5 @@ token.base
 /appvk/key.txt
 /music/key.txt
 .idea
+*.opus
+*.mp*
